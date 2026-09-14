@@ -78,7 +78,7 @@ def montar_dataset():
     })
 
     df = df_alunos.merge(df_meta_municipio, on=["id_municipio", "ano", "rede"], how="left")
-    df = df.merge(df_meta_uf, on=["sigla_uf", "ano"], how="left")  # sem 'rede' aqui
+    df = df.merge(df_meta_uf, on=["sigla_uf", "ano"], how="left")
 
     colunas_para_remover = (
         [c for c in df.columns if c.startswith("_")]
@@ -92,12 +92,39 @@ def montar_dataset():
         log.info("[EDA] Coluna 'serie' tem variancia zero — removida (sem poder preditivo)")
         df = df.drop(columns=["serie"])
 
+    # --- Metas de 2030 são constantes (80,0 para todos os municípios/UFs) ---
+    # Confirmado no heatmap de correlação do notebook de EDA: correlação indefinida
+    # por variância zero. Sem poder preditivo, mesmo raciocínio de 'serie'.
+    colunas_meta_2030 = ["meta_alfabetizacao_2030_municipio", "meta_alfabetizacao_2030_uf"]
+    for col in colunas_meta_2030:
+        if col in df.columns and df[col].nunique(dropna=True) <= 1:
+            log.info(f"[EDA] Coluna '{col}' tem variancia zero — removida")
+            df = df.drop(columns=[col])
+
+    # --- Filtro de escopo: mantemos só alunos efetivamente avaliados ---
+    # Achado no notebook de EDA (célula 9/10): presenca="Ausente" e
+    # preenchimento_caderno="Prova não preenchida" são 100% "Não" por construção
+    # (o aluno nunca teve proficiencia medida, não é um "Não alfabetizado" real).
+    # Manter esses registros faria o modelo aprender "o aluno fez a prova?"
+    # em vez de "o aluno está alfabetizado?" — um vazamento indireto de rótulo.
+    antes = len(df)
+    df = df[(df["presenca"] == "Presente") & (df["preenchimento_caderno"] == "Prova preenchida")]
+    log.info(f"[ESCOPO] Filtro presenca/preenchimento: {antes} -> {len(df)} registros "
+              f"({(antes - len(df)) / antes * 100:.1f}% removidos — alunos nao avaliados)")
+
+    # Depois do filtro, presenca e preenchimento_caderno viram colunas constantes
+    # (só restou "Presente"/"Prova preenchida") — sem poder preditivo, removidas.
+    for col in ["presenca", "preenchimento_caderno"]:
+        if col in df.columns and df[col].nunique(dropna=True) <= 1:
+            log.info(f"[EDA] Coluna '{col}' ficou constante apos o filtro — removida")
+            df = df.drop(columns=[col])
+
     log.info(f"Dataset final: {len(df)} registros, {len(df.columns)} colunas")
     log.info(f"Colunas: {list(df.columns)}")
     log.info(f"Nulos por coluna:\n{df.isna().sum()}")
 
     return df
-    
+        
 def salvar(df):
     caminho_local = "data/dataset_ml_alunos.parquet"
     df.to_parquet(caminho_local, index=False)

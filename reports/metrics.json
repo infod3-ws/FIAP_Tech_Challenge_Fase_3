@@ -2,70 +2,70 @@
   "melhor_modelo": "random_forest",
   "resultados_por_modelo": {
     "logistic_regression": {
-      "accuracy": 0.6828839147893132,
-      "precision": 0.6479455423323276,
-      "recall": 0.8364788906273226,
-      "f1": 0.7302396220418407,
-      "roc_auc_teste": 0.7539251663307966,
-      "roc_auc_cv_amostra": 0.7550937773913965,
+      "accuracy": 0.6342689955628953,
+      "precision": 0.6481097385752518,
+      "recall": 0.8352926356100879,
+      "f1": 0.7298913647706595,
+      "roc_auc_teste": 0.6623134946565248,
+      "roc_auc_cv_amostra": 0.6632599904375936,
       "melhores_hiperparametros": {
         "classifier__C": 0.01
       },
       "tamanho_amostra_busca": 300000,
-      "roc_auc_treino_full": 0.7551678978491437,
-      "gap_treino_teste": 0.0012
+      "roc_auc_treino_full": 0.6633418874189538,
+      "gap_treino_teste": 0.001
     },
     "random_forest": {
-      "accuracy": 0.6865153752078168,
-      "precision": 0.6522840186737091,
-      "recall": 0.8332464116459944,
-      "f1": 0.7317430957195895,
-      "roc_auc_teste": 0.7602113174689902,
-      "roc_auc_cv_amostra": 0.7604192960216456,
+      "accuracy": 0.6411653622641903,
+      "precision": 0.6572352628441623,
+      "recall": 0.8222569348214961,
+      "f1": 0.7305428896962208,
+      "roc_auc_teste": 0.6728278976003933,
+      "roc_auc_cv_amostra": 0.6722347167018471,
       "melhores_hiperparametros": {
         "classifier__max_depth": 10,
         "classifier__n_estimators": 200
       },
       "tamanho_amostra_busca": 300000,
-      "roc_auc_treino_full": 0.7614451069559347,
-      "gap_treino_teste": 0.0012
+      "roc_auc_treino_full": 0.6744360263181641,
+      "gap_treino_teste": 0.0016
     }
   },
   "matriz_confusao": [
     [
-      200309,
-      176300
+      103817,
+      170206
     ],
     [
-      66186,
-      330723
+      70548,
+      326362
     ]
   ],
   "classification_report": {
     "0": {
-      "precision": 0.7516426199365842,
-      "recall": 0.5318752339960011,
-      "f1-score": 0.6229443449271036,
-      "support": 376609.0
+      "precision": 0.5954004530725776,
+      "recall": 0.3788623582691964,
+      "f1-score": 0.46306770029528,
+      "support": 274023.0
     },
     "1": {
-      "precision": 0.6522840186737091,
-      "recall": 0.8332464116459944,
-      "f1-score": 0.7317430957195895,
-      "support": 396909.0
+      "precision": 0.6572352628441623,
+      "recall": 0.8222569348214961,
+      "f1-score": 0.7305428896962208,
+      "support": 396910.0
     },
-    "accuracy": 0.6865153752078168,
+    "accuracy": 0.6411653622641903,
     "macro avg": {
-      "precision": 0.7019633193051467,
-      "recall": 0.6825608228209978,
-      "f1-score": 0.6773437203233466,
-      "support": 773518.0
+      "precision": 0.6263178579583699,
+      "recall": 0.6005596465453462,
+      "f1-score": 0.5968052949957504,
+      "support": 670933.0
     },
     "weighted avg": {
-      "precision": 0.70065954899493,
-      "recall": 0.6865153752078168,
-      "f1-score": 0.6787713630162686,
-      "support": 773518.0
+      "precision": 0.6319806396879918,
+      "recall": 0.6411653622641903,
+      "f1-score": 0.6213004559133929,
+      "support": 670933.0
     }
   },
   "features_numericas": [
@@ -73,16 +73,12 @@
     "meta_alfabetizacao_2024_municipio",
     "meta_alfabetizacao_2025_municipio",
     "meta_alfabetizacao_2026_municipio",
-    "meta_alfabetizacao_2030_municipio",
     "meta_alfabetizacao_2024_uf",
     "meta_alfabetizacao_2025_uf",
-    "meta_alfabetizacao_2026_uf",
-    "meta_alfabetizacao_2030_uf"
+    "meta_alfabetizacao_2026_uf"
   ],
   "features_categoricas": [
     "rede",
-    "presenca",
-    "preenchimento_caderno",
     "sigla_uf"
   ],
   "colunas_excluidas_por_data_leakage": [
