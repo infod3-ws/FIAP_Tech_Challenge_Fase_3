@@ -149,7 +149,7 @@ Na análise exploratória, identificamos que `presenca = "Ausente"` e `preenchim
 > dados/projeto, defina as variáveis de ambiente `FIAP_GCP_PROJECT` e
 > `FIAP_GCS_BUCKET` (ver `src/config.py`) antes de executar.
 
-\`\`\`bash
+```bash
 python3 -m venv .venv
 source .venv/bin/activate
 python3 -m pip install -r requirements.txt
@@ -159,7 +159,7 @@ gcloud auth application-default login   # autentica com SUA propria conta Google
 python3 src/preprocessing/build_dataset.py
 python3 src/modeling/train_model.py
 python3 src/evaluation/interpret_shap.py
-\`\`\`
+```
 
 ## 13. Estrutura do Repositório
 
