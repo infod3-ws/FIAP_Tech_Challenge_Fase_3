@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.venv/
+data/*.parquet
+reports/models/*.joblib
+reports/models/*.parquet
+!docs/*.json
+.env
+credentials/
+.DS_Store
+.vscode/
