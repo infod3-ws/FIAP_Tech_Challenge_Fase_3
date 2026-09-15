@@ -126,6 +126,9 @@ Na análise exploratória, identificamos que `presenca = "Ausente"` e `preenchim
 - **Poder preditivo moderado (ROC-AUC 0,67):** consequência direta da decisão da Seção 8 — um modelo mais "impressionante" era possível mantendo o vazamento de rótulo, mas seria enganoso.
 - **Classe levemente desbalanceada** (59%/41%) após o filtro de escopo — não tratamos com técnicas de balanceamento (SMOTE, `class_weight`), pois o desbalanceamento é moderado e as métricas de avaliação já contemplam essa assimetria (precisão, recall, F1, não só acurácia).
 - **`max_depth` do Random Forest limitado a 10** por restrição de memória da máquina local, não necessariamente o ótimo absoluto — a busca de hiperparâmetros foi feita em amostra, não na base completa, por tempo/memória.
+- **Meta nacional (`meta_alfabetizacao_brasil`) não incluída como feature:** possui apenas
+  3 valores distintos (um por ano), tornando-a redundante com a variável `ano` já presente
+  no modelo — decisão consciente, não uma omissão.
 
 ## 10. Aplicação Prática para Políticas Públicas
 
@@ -161,7 +164,21 @@ python3 src/modeling/train_model.py
 python3 src/evaluation/interpret_shap.py
 ```
 
-## 13. Estrutura do Repositório
+## 13. Visualizações Finais
+
+Depois de rodar o pipeline completo (Seção 12), um último script consolida os
+resultados em gráficos prontos para o README e para a apresentação executiva —
+sem reprocessar nada pesado, só lê os relatórios já salvos:
+
+```bash
+python3 src/visualization/gerar_graficos_finais.py
+```
+
+Gera dois arquivos em `images/`:
+- **`metricas_finais.png`** — acurácia, precisão, recall, F1 e ROC-AUC do modelo vencedor, lado a lado
+- **`shap_ranking_top10.png`** — as 10 variáveis mais influentes na predição, segundo o SHAP (mesmo ranking da Seção 7)
+
+## 14. Estrutura do Repositório
 
 ```
 ├── data/                         # dataset_ml_alunos.parquet (reproduzível, não versionado)
@@ -173,18 +190,23 @@ python3 src/evaluation/interpret_shap.py
 │   │   └── build_dataset.py
 │   ├── modeling/
 │   │   └── train_model.py
-│   └── evaluation/
-│       └── interpret_shap.py
+│   ├── evaluation/
+│   │   └── interpret_shap.py
+│   └── visualization/
+│       └── gerar_graficos_finais.py   # gráficos-resumo a partir dos reports já salvos
 ├── reports/
 │   ├── metrics.json
+│   ├── shap_ranking.csv
 │   └── models/                   # pipeline .joblib (reproduzível, não versionado)
-├── images/                       # gráficos do EDA e do SHAP
+├── images/                       # gráficos do EDA, SHAP e resumo final (metricas_finais.png, shap_ranking_top10.png)
+├── docs/
+│   └── dicionario_features.md    # documentação técnica: cada feature, tipo e tratamento no pipeline
 ├── requirements.txt
 ├── README.md
 └── .gitignore
 ```
 
-## 14. Apresentação Executiva
+## 15. Apresentação Executiva
 
 [Assista à apresentação executiva da solução](https://github.com/infod3-ws/FIAP_Tech_Challenge_Fase_3/releases/download/v0.1-fiap-tc3-apresentacao/Apresentacao_Executiva_TechChallenge_Fase3.mp4)
 
