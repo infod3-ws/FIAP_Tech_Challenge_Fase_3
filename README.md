@@ -183,3 +183,9 @@ python3 src/evaluation/interpret_shap.py
 ├── README.md
 └── .gitignore
 ```
+
+## 14. Apresentação Executiva
+
+[Assista à apresentação executiva da solução](https://github.com/infod3-ws/FIAP_Tech_Challenge_Fase_3/releases/download/v0.1-fiap-tc3-apresentacao/Apresentacao_Executiva_TechChallenge_Fase3.mp4)
+
+O vídeo (5 minutos) aborda o problema de negócio, a arquitetura da solução, o achado metodológico sobre vazamento indireto de rótulo (Seção 8), as métricas finais do modelo, a interpretabilidade via SHAP (Seção 7) e a aplicação prática para políticas públicas (Seção 10).
